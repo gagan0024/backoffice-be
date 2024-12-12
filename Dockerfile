@@ -1,11 +1,12 @@
 # Use the official Node.js image from Docker Hub
-FROM node:20
+FROM node:20-alpine
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
 # Copy package.json and install dependencies
-COPY package.json ./
+COPY package*.json ./
+COPY . .
 RUN npm install
 RUN npm run build
 
