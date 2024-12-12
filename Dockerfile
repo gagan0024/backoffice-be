@@ -1,23 +1,18 @@
-# Use the official Node.js 20 image
-FROM node:20
+# Use the official Node.js image from Docker Hub
+FROM node:14
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
+# Copy package.json and install dependencies
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy the entire project
+# Copy the rest of the application
 COPY . .
 
-# Build the TypeScript project
-RUN npm run build
-
-# Expose the port your app runs on
+# Expose the port the app will run on
 EXPOSE 8080
 
-# Start the application
-CMD ["npm", "prod"]
+# Command to run the app
+CMD ["node", "dist/app.js"]
