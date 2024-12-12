@@ -25,10 +25,10 @@ app.use(cors());
 app.use(json());
 
 // Add the routes with the base prefix
-app.use(`/${config.prefix}`, routes);
+app.use(`/api/${config.prefix}`, routes);
 
 // Define the welcome route
-app.get('/welcome', (req: Request, res: Response): void => {
+app.get('/api/health', (req: Request, res: Response): void => {
     res.send('Welcome! Your server is running perfectly.');
 });
 
