@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 8080
 
 # Command to run the app
-CMD ["node", "dist/app.js"]
+CMD ["node", "dist/index.ts"]
