@@ -1,8 +1,11 @@
 import { Location, ILocation } from '../models/location';
 import { Building } from '../models/building';
 import { SubBuilding } from '../models/sub-building';
+import { Level } from '../models/level';
 import { Service } from '../models/service';
 import { SubService } from '../models/sub-service';
+import { Types } from 'mongoose';
+import { Room } from '../models/room';
 
 const migrate = async (): Promise<any> => {
     await migrateLocations();
@@ -50,114 +53,426 @@ const migrateBuildingAndSubBuildings = async () => {
     const buildingsData = [
         {
             type: "Elevated Metro Station",
-            description: 'Elevated Metro Station',
-            image: '',
+            description: "Elevated Metro Station",
+            image: "",
             subBuildings: [
                 {
                     type: "Station Building",
-                    levels: ["Ground Floor", "Concourse", "Platform", "Roof"]
+                    description: "Primary building for passenger services in elevated metro stations.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Entry/exit points, ticket counters, and basic amenities.",
+                            rooms: [
+                                {
+                                    name: "STATION ENTRY-01",
+                                    description: "STATION ENTRY-01"
+                                },
+                                {
+                                    name: "STATION ENTRY-02",
+                                    description: "STATION ENTRY-02"
+                                },
+                                {
+                                    name: "SPARE ROOM",
+                                    description: "SPARE ROOM"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Concourse",
+                            description: "Passenger waiting areas, ticket validation, and shops.",
+                            rooms: [
+                                {
+                                    name: "SCR ROOM",
+                                    description: "SCR ROOM"
+                                },
+                                {
+                                    name: "TOM ROOM",
+                                    description: "TOM ROOM"
+                                },
+                                {
+                                    name: "TELECOM EQUIPMENT ROOM",
+                                    description: "TELECOM EQUIPMENT ROOM"
+                                },
+                                {
+                                    name: "UPS ROOM",
+                                    description: "UPS ROOM"
+                                },
+                                {
+                                    name: "SINGNLING EQUIPMENT ROOM",
+                                    description: "SINGNLING EQUIPMENT ROOM"
+                                },
+                                {
+                                    name: "ASS ROOM",
+                                    description: "ASS ROOM"
+                                },
+                                {
+                                    name: "ODU ROOM/SPACE",
+                                    description: "ODU ROOM/SPACE"
+                                },
+                                {
+                                    name: "LOADING/UNLOADING DECK",
+                                    description: "LOADING/UNLOADING DECK"
+                                },
+                                {
+                                    name: "BOH CORRIDOR",
+                                    description: "BOH CORRIDOR"
+                                },
+                                {
+                                    name: "ESC PANEL SPACE",
+                                    description: "ESC PANEL SPACE"
+                                },
+                                {
+                                    name: "MALE TOILET AREA",
+                                    description: "MALE TOILET AREA"
+                                },
+                                {
+                                    name: "FEMALE TOILET AREA",
+                                    description: "FEMALE TOILET AREA"
+                                },
+                                {
+                                    name: "ACCESSIBLE TOILET AREA",
+                                    description: "ACCESSIBLE TOILET AREA"
+                                },
+                                {
+                                    name: "F. CHANGING ROOM",
+                                    description: "F. CHANGING ROOM"
+                                },
+                                {
+                                    name: "M. CHANGING ROOM",
+                                    description: "M. CHANGING ROOM"
+                                },
+                                {
+                                    name: "MESS ROOM",
+                                    description: "MESS ROOM"
+                                },
+                                {
+                                    name: "SPARE ROOM",
+                                    description: "SPARE ROOM"
+                                },
+                                {
+                                    name: "SECURITY ROOM",
+                                    description: "SECURITY ROOM"
+                                },
+                                {
+                                    name: "PAID AREA",
+                                    description: "PAID AREA"
+                                },
+                                {
+                                    name: "UNPAID AREA",
+                                    description: "UNPAID AREA"
+                                },
+                                {
+                                    name: "ENTRY EXIT CORRIDOR",
+                                    description: "ENTRY EXIT CORRIDOR"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Platform",
+                            description: "Boarding and alighting of trains with safety measures.",
+                            rooms: [
+                                {
+                                    name: "PLATFORM AREA-01",
+                                    description: "PLATFORM AREA-01"
+                                },
+                                {
+                                    name: "PLATFORM AREA-02",
+                                    description: "PLATFORM AREA-02"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Roof",
+                            description: "Covers and protects the platform; may include solar panels."
+                        }
+                    ]
                 },
                 {
                     type: "Pump Room",
-                    levels: ["DG Room", "Pump Room"]
+                    description: "Facility housing water and power management systems.",
+                    levels: [
+                        {
+                            name: "DG Room",
+                            description: "Room for the diesel generator providing backup power."
+                        },
+                        {
+                            name: "Pump Room",
+                            description: "Manages water pumping systems for station operations."
+                        }
+                    ]
                 },
                 {
                     type: "Parking Areas",
-                    levels: ["Ground Floor", "First Floor"]
+                    description: "Designated parking spaces for commuters.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Open or covered parking for two-wheelers and four-wheelers."
+                        },
+                        {
+                            name: "First Floor",
+                            description: "Additional parking space with ramps or lifts for vehicles."
+                        }
+                    ]
                 }
             ]
         },
         {
             type: "Underground Metro Station",
-            description: 'Underground Metro Station',
-            image: '',
+            description: "Underground Metro Station",
+            image: "",
             subBuildings: [
                 {
                     type: "Station Building",
-                    levels: ["Ground Floor", "Concourse", "Platform", "Undercroft"]
+                    description: "Main structure for passenger services in underground metro stations.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Surface-level facilities, entry/exit to the station."
+                        },
+                        {
+                            name: "Concourse",
+                            description: "Ticketing, passenger movement, and shops."
+                        },
+                        {
+                            name: "Platform",
+                            description: "Subterranean boarding/alighting of trains with safety features."
+                        },
+                        {
+                            name: "Undercroft",
+                            description: "Storage, service areas, and technical installations."
+                        }
+                    ]
                 },
                 {
                     type: "Ancillary Building",
-                    levels: ["DG Room", "Pump Room", "Water Tank", "First Floor", "Cooling Tower"]
+                    description: "Support structure for operational and technical systems.",
+                    levels: [
+                        {
+                            name: "DG Room",
+                            description: "Diesel generator for emergency power."
+                        },
+                        {
+                            name: "Pump Room",
+                            description: "Water management systems."
+                        },
+                        {
+                            name: "Water Tank",
+                            description: "Storage for firefighting or operational water needs."
+                        },
+                        {
+                            name: "First Floor",
+                            description: "Administrative or technical rooms."
+                        },
+                        {
+                            name: "Cooling Tower",
+                            description: "Manages HVAC systems to regulate temperature."
+                        }
+                    ]
                 },
                 {
                     type: "Utility Gallery",
-                    levels: ["Ground Floor"]
+                    description: "Space for utilities like electrical, telecom, or drainage systems.",
+                    levels: [
+                        {
+                            name: "Ground Floor Tower",
+                            description: "Area for utility installations and access."
+                        }
+                    ]
                 }
             ]
         },
         {
             type: "Depot",
-            description: 'Depot',
-            image: '',
+            description: "Depot",
+            image: "",
             subBuildings: [
                 {
                     type: "Admin Building",
-                    levels: ["Ground Floor", "First Floor", "Second Floor", "Third Floor", "Terrace"]
+                    description: "Administrative hub for depot operations.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Reception, offices, and security."
+                        },
+                        {
+                            name: "First Floor",
+                            description: "Administrative offices and meeting rooms."
+                        },
+                        {
+                            name: "Second Floor",
+                            description: "Additional offices or technical staff areas."
+                        },
+                        {
+                            name: "Third Floor",
+                            description: "Higher management offices or operations rooms."
+                        },
+                        {
+                            name: "Terrace",
+                            description: "Open space for HVAC units or other utilities."
+                        }
+                    ]
                 },
                 {
                     type: "Workshop Building",
-                    levels: ["Ground Floor", "First Floor"]
+                    description: "Building for train maintenance and repairs.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Maintenance and repair workshops."
+                        },
+                        {
+                            name: "First Floor",
+                            description: "Offices or tool storage related to maintenance."
+                        }
+                    ]
                 },
                 {
                     type: "Pump Room",
-                    levels: ["Ground Floor", "Water Tank"]
+                    description: "Facility managing water systems for the depot.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Pump operations."
+                        },
+                        {
+                            name: "Water Tank",
+                            description: "Water storage for operations or fire safety."
+                        }
+                    ]
                 },
                 {
                     type: "ASS Room",
-                    levels: ["Ground Floor"]
+                    description: "Auxiliary Sub-Station for electrical supply management.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Space for electrical systems and backup equipment."
+                        }
+                    ]
                 },
                 {
                     type: "Auto Wash Plant",
-                    levels: ["Ground Floor"]
+                    description: "Facility for automated train washing.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Automatic train washing equipment."
+                        }
+                    ]
                 },
                 {
                     type: "Cleaning Contractor Staff Toilet",
-                    levels: ["Ground Floor"]
+                    description: "Restroom facilities for cleaning staff.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Toilet facilities for contractor staff."
+                        }
+                    ]
                 },
                 {
                     type: "Compressor Room",
-                    levels: ["Ground Floor"]
+                    description: "Houses air compressors for maintenance tasks.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Air compressors for operational needs."
+                        }
+                    ]
                 },
                 {
                     type: "Etu",
-                    levels: ["Ground Floor"]
+                    description: "Electric Traction Unit for train movement systems.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Manages electric traction systems for train movement."
+                        }
+                    ]
                 },
                 {
                     type: "Pit Wheel Lathe",
-                    levels: ["Ground Floor"]
+                    description: "Facility for train wheel maintenance.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Wheel maintenance and alignment operations."
+                        }
+                    ]
                 },
                 {
                     type: "Scrap Yard",
-                    levels: ["Ground Floor"]
+                    description: "Storage area for scrap materials or waste.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Designated area for storing scrap materials."
+                        }
+                    ]
                 },
                 {
                     type: "Store And S&T Cables",
-                    levels: ["Ground Floor"]
+                    description: "Storage for spare parts and signaling cables.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Storage space for operational supplies."
+                        }
+                    ]
                 },
                 {
                     type: "Time Office And Security Building",
-                    levels: ["Ground Floor"]
+                    description: "Tracks employee attendance and handles security operations.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Security and administrative functions."
+                        }
+                    ]
                 },
                 {
                     type: "Welding Plant",
-                    levels: ["Ground Floor"]
+                    description: "Welding operations for maintenance tasks.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Space for welding and associated equipment."
+                        }
+                    ]
                 },
                 {
                     type: "Storage",
-                    levels: ["Ground Floor"]
+                    description: "General storage for depot operations.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Storage area for operational supplies."
+                        }
+                    ]
                 },
                 {
                     type: "Stabling Yard",
-                    levels: ["Ground Floor"]
+                    description: "Parking for trains during non-operational hours.",
+                    levels: [
+                        {
+                            name: "Ground Floor",
+                            description: "Designated area for train parking."
+                        }
+                    ]
                 }
             ]
         }
-    ];
+    ]
 
     try {
-        // Step 1: Upsert Buildings
-        const buildingOperations = buildingsData.map(({ subBuildings, ...building }) => ({
+        console.log('Starting Buildings migration...');
+
+        const clonedBuildingsData = JSON.parse(JSON.stringify(buildingsData))
+
+        // Upsert Buildings
+        const buildingOperations = clonedBuildingsData.map((building: any) => ({
             updateOne: {
                 filter: { type: building.type }, // Match on the unique field (e.g., `type`)
                 update: { $set: building },
@@ -165,36 +480,131 @@ const migrateBuildingAndSubBuildings = async () => {
             },
         }));
 
+
         const buildingResult = await Building.bulkWrite(buildingOperations);
         console.log('Buildings Upsert Result:', buildingResult.isOk());
 
-        // Fetch the updated/inserting documents
-        const updatedBuildings = await Building.find({ type: { $in: buildingsData.map(b => b.type) } });
+        // Fetch updated buildings to establish relationships for sub-buildings
+        const updatedBuildings = await Building.find({
+            type: { $in: clonedBuildingsData.map((b: any) => b.type) },
+        });
 
-        // Step 2: Upsert Sub-Buildings
+        const buildingArray = updatedBuildings.reduce<{ type: string; id: Types.ObjectId }[]>((array, building) => {
+            array.push({ type: building.type, id: building.id });
+            return array;
+        }, []);
+
+        // Upsert SubBuildings
         const subBuildingOperations: any[] = [];
-        updatedBuildings.forEach((buildingDoc) => {
-            const buildingData = buildingsData.find(b => b.type === buildingDoc.type);
-            if (!buildingData) return;
-
-            buildingData.subBuildings.forEach((subBuilding) => {
-                subBuildingOperations.push({
-                    updateOne: {
-                        filter: {
-                            building_id: buildingDoc._id,
-                            type: subBuilding.type,
+        buildingsData.forEach((building) => {
+            // Find the matching building in the array
+            const matchingBuilding = buildingArray.find(
+                (item) => item.type === building.type
+            );
+            const buildingId = matchingBuilding ? matchingBuilding.id : null;
+            if (!buildingId) return
+            if (building.subBuildings) {
+                building.subBuildings.forEach((subBuilding) => {
+                    subBuildingOperations.push({
+                        updateOne: {
+                            filter: { type: subBuilding.type, building_id: buildingId },
+                            update: { $set: { ...subBuilding, building_id: buildingId } },
+                            upsert: true,
                         },
-                        update: { $set: { ...subBuilding, building_id: buildingDoc._id } },
-                        upsert: true,
-                    },
+                    });
                 });
-            });
+            }
         });
 
         const subBuildingResult = await SubBuilding.bulkWrite(subBuildingOperations);
-        console.log('Sub-Buildings Upsert Result:', subBuildingResult.isOk());
+        console.log('SubBuildings Upsert Result:', subBuildingResult.isOk());
+
+        // Fetch updated sub-buildings to establish relationships for levels
+        const updatedSubBuildings = await SubBuilding.find({
+            building_id: { $in: buildingArray.map((item) => item.id) },
+        });
+
+        const subBuildingArray = updatedSubBuildings.reduce<{ type: string; id: Types.ObjectId, buildingId: Types.ObjectId }[]>((array, subBuilding) => {
+            array.push({ id: subBuilding.id, type: subBuilding.type, buildingId: subBuilding.building_id });
+            return array;
+        }, []);
+
+        // Upsert Levels
+        const levelOperations: any[] = [];
+        buildingsData.forEach((building) => {
+            if (building.subBuildings) {
+                building.subBuildings.forEach((subBuilding) => {
+                    // Find the matching subBuilding in the array
+                    const subBuildingId = subBuildingArray.find((subBuildingItem) => {
+                        const matchedBuildingData = updatedBuildings.find((buildingItem) => buildingItem.id === subBuildingItem.buildingId.toString())
+                        return subBuildingItem.type === subBuilding.type && matchedBuildingData?.type === building.type
+                    })?.id;
+
+                    if (!subBuildingId) return
+                    if (subBuilding.levels) {
+                        subBuilding.levels.forEach((level) => {
+                            levelOperations.push({
+                                updateOne: {
+                                    filter: { name: level.name, sub_building_id: subBuildingId },
+                                    update: { $set: { ...level, sub_building_id: subBuildingId } },
+                                    upsert: true,
+                                },
+                            });
+                        });
+                    }
+                });
+            }
+        });
+
+        const levelResult = await Level.bulkWrite(levelOperations);
+        console.log('Levels Upsert Result:', levelResult.isOk());
+
+        // Fetch updated levels to establish relationships for rooms
+        const updatedLevels = await Level.find({
+            sub_building_id: { $in: subBuildingArray.map((item) => item.id) },
+        });
+
+        const levelArray = updatedLevels.reduce<{ name: string; id: Types.ObjectId, subBuildingId: Types.ObjectId }[]>((array, level) => {
+            array.push({ id: level.id, name: level.name, subBuildingId: level.sub_building_id })
+            return array;
+        }, []);
+
+        // Upsert Rooms
+        const roomOperations: any[] = [];
+        buildingsData.forEach((building) => {
+            if (building.subBuildings) {
+                building.subBuildings.forEach((subBuilding) => {
+                    if (subBuilding.levels) {
+                        subBuilding.levels.forEach((level) => {
+                            const levelId = levelArray.find((levelItem) => {
+                                const matchedSubBuildingData = updatedSubBuildings.find((subBuildingItem) => subBuildingItem.id === levelItem.subBuildingId.toString())
+                                return levelItem.name === level.name && matchedSubBuildingData?.type === subBuilding.type
+                            })?.id;
+
+                            if (!levelId) return
+                            if (level.rooms) {
+                                level.rooms.forEach((room) => {
+                                    roomOperations.push({
+                                        updateOne: {
+                                            filter: { name: room.name, level_id: levelId },
+                                            update: { $set: { ...room, level_id: levelId } },
+                                            upsert: true,
+                                        },
+                                    });
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        const roomResult = await Room.bulkWrite(roomOperations);
+        console.log('Rooms Upsert Result:', roomResult.isOk());
+
+        console.log('Migration completed successfully.');
     } catch (error) {
-        console.error(error);
+        console.error('Error during migration:', error);
     }
 
 }

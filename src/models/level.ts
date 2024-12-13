@@ -1,28 +1,28 @@
 import mongoose from 'mongoose';
 
 // Sub-Building Interface
-export interface ISubBuilding {
-    type: string;
+export interface ILevel {
+    name: string;
     description: string;
-    building_id: mongoose.Types.ObjectId;
+    sub_building_id: mongoose.Types.ObjectId;
 }
 
 // Sub-Building Document Interface
-interface SubBuildingDoc extends mongoose.Document {
-    type: string;
+interface LevelDoc extends mongoose.Document {
+    name: string;
     description: string;
-    building_id: mongoose.Types.ObjectId;
+    sub_building_id: mongoose.Types.ObjectId;
 }
 
 // Sub-Building Schema
-const subBuildingSchema = new mongoose.Schema<ISubBuilding>(
+const levelSchema = new mongoose.Schema<ILevel>(
     {
-        type: {
+        name: {
             type: String,
             required: true,
             trim: true,
-            minLength: [2, 'Sub-building type too short'],
-            maxLength: [50, 'Sub-building type too long'],
+            minLength: [2, 'Level name too short'],
+            maxLength: [50, 'Level name too long'],
         },
         description: {
             type: String,
@@ -30,9 +30,9 @@ const subBuildingSchema = new mongoose.Schema<ISubBuilding>(
             trim: true,
             maxLength: [500, 'Description too long'],
         },
-        building_id: {
+        sub_building_id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Building',
+            ref: 'SubBuilding',
             required: true,
         },
     },
@@ -40,17 +40,17 @@ const subBuildingSchema = new mongoose.Schema<ISubBuilding>(
 );
 
 // Static method for creating a new Building document
-interface SubBuildingModelInterface extends mongoose.Model<SubBuildingDoc> {
-    build(attr: ISubBuilding): SubBuildingDoc;
+interface LevelModelInterface extends mongoose.Model<LevelDoc> {
+    build(attr: ILevel): LevelDoc;
 }
 
 // Add a static build method to the Building model
-subBuildingSchema.statics.build = (attr: ISubBuilding) => {
-    return new SubBuilding(attr);
+levelSchema.statics.build = (attr: ILevel) => {
+    return new Level(attr);
 };
 
 // Configure schema to transform output JSON
-subBuildingSchema.set('toJSON', {
+levelSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString();
         delete returnedObject._id;
@@ -61,6 +61,6 @@ subBuildingSchema.set('toJSON', {
 });
 
 // Create the SubBuilding model
-const SubBuilding = mongoose.model<SubBuildingDoc, SubBuildingModelInterface>('SubBuilding', subBuildingSchema);
+const Level = mongoose.model<LevelDoc, LevelModelInterface>('Level', levelSchema);
 
-export { SubBuilding };
+export { Level };

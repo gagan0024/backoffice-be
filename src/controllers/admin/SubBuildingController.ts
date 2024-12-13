@@ -34,11 +34,11 @@ class SubBuildingController {
 
     static newSubBuilding = async (req: Request, res: Response, next: NextFunction) => {
         // Get parameters from the body
-        const { building_id, type, levels } = req.body;
+        const { building_id, type, description } = req.body;
         let building;
 
         try {
-            building = SubBuilding.build({ building_id, type, levels } as ISubBuilding);
+            building = SubBuilding.build({ building_id, type, description } as ISubBuilding);
 
             // Save the building
             await building.save();
@@ -60,7 +60,7 @@ class SubBuildingController {
         const id = req.params.id;
 
         // Get values from the body
-        const { building_id, type, levels } = req.body;
+        const { building_id, type, description } = req.body;
 
         // Mongoose automatically casts the id to ObjectID
         const subBuilding = await SubBuilding.findById(id);
@@ -69,7 +69,7 @@ class SubBuildingController {
         // Edit the properties
         subBuilding.building_id = building_id
         subBuilding.type = type
-        subBuilding.levels = levels
+        subBuilding.description = description
 
         // Save and catch all validation errors
         try {
