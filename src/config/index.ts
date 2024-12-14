@@ -8,7 +8,7 @@ const config = {
         audience: process.env.JWT_AUDIENCE || 'ISSUER',
         issuer: process.env.JWT_ISSUER || 'AUDIENCE'
     },
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 8080,
     prefix: process.env.API_PREFIX || 'api',
     databaseUri: process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/manas'
 };
