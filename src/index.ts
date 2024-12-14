@@ -32,5 +32,9 @@ app.get('/health', (req: Request, res: Response): void => {
     res.send('Welcome! Your server is running perfectly.');
 });
 
+app.listen(config.port, (): void => {
+    console.log(`Server is listening on port ${config.port}`);
+});
+
 // Add error handling middleware
 app.use(errorHandler);

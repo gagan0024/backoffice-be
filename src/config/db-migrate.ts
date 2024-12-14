@@ -65,6 +65,14 @@ const migrateBuildingAndSubBuildings = async () => {
                             description: "Entry/exit points, ticket counters, and basic amenities.",
                             rooms: [
                                 {
+                                    name: "PUMP ROOM",
+                                    description: "PUMP ROOM"
+                                },
+                                {
+                                    name: "DG ROOM",
+                                    description: "DG ROOM"
+                                },
+                                {
                                     name: "STATION ENTRY-01",
                                     description: "STATION ENTRY-01"
                                 },
@@ -229,15 +237,137 @@ const migrateBuildingAndSubBuildings = async () => {
                     levels: [
                         {
                             name: "Ground Floor",
-                            description: "Surface-level facilities, entry/exit to the station."
+                            description: "Surface-level facilities, entry/exit to the station.",
+                            rooms: [
+                                {
+                                    name: "PUMP ROOM",
+                                    description: "PUMP ROOM"
+                                },
+                                {
+                                    name: "DG ROOM",
+                                    description: "DG ROOM"
+                                },
+                                {
+                                    name: "STATION ENTRY-01",
+                                    description: "STATION ENTRY-01"
+                                },
+                                {
+                                    name: "STATION ENTRY-02",
+                                    description: "STATION ENTRY-02"
+                                },
+                                {
+                                    name: "SPARE ROOM",
+                                    description: "SPARE ROOM"
+                                }
+                            ]
                         },
                         {
                             name: "Concourse",
-                            description: "Ticketing, passenger movement, and shops."
+                            description: "Ticketing, passenger movement, and shops.",
+                            rooms: [
+                                {
+                                    name: "SIGNAL EQUIPMENT ROOM",
+                                    description: "SINGNLING EQUIPMENT ROOM"
+                                },
+                                {
+                                    name: "TELECOM EQUIPMENT ROOM",
+                                    description: "TELECOM EQUIPMENT ROOM"
+                                },
+                                {
+                                    name: "UPS S&T",
+                                    description: "UPS S&T"
+                                },
+                                {
+                                    name: "UPS ELECTRICAL",
+                                    description: "UPS ELECTRICAL"
+                                },
+                                {
+                                    name: "STATION CONTROL ROOM",
+                                    description: "STATION CONTROL ROOM"
+                                },
+                                {
+                                    name: "TICKET OFFICE MANAGER",
+                                    description: "TICKET OFFICE MANAGER"
+                                },
+                                {
+                                    name: "EFO",
+                                    description: "EFO"
+                                },
+                                {
+                                    name: "ASS ROOM",
+                                    description: "ASS ROOM"
+                                },
+                                {
+                                    name: "BOH CORRIDOR",
+                                    description: "BOH CORRIDOR"
+                                },
+                                {
+                                    name: "AHU ROOM",
+                                    description: "AHU ROOM"
+                                },
+                                {
+                                    name: "TVS FAN ROOM",
+                                    description: "TVS FAN ROOM"
+                                },
+                                {
+                                    name: "GSM ROOM",
+                                    description: "GSM ROOM"
+                                },
+                                {
+                                    name: "STAFF ROOM",
+                                    description: "STAFF ROOM"
+                                },
+                                {
+                                    name: "MALE TOILET AREA",
+                                    description: "MALE TOILET AREA"
+                                },
+                                {
+                                    name: "FEMALE TOILET AREA",
+                                    description: "FEMALE TOILET AREA"
+                                },
+                                {
+                                    name: "CHILLER PLANT ROOM",
+                                    description: "CHILLER PLANT ROOM"
+                                },
+                                {
+                                    name: "SECURITY ROOM",
+                                    description: "SECURITY ROOM"
+                                },
+                                {
+                                    name: "CONCOURSE AREA",
+                                    description: "CONCOURSE AREA"
+                                },
+                                {
+                                    name: "SPARE ROOM",
+                                    description: "SPARE ROOM"
+                                },
+                                {
+                                    name: "PAID AREA",
+                                    description: "PAID AREA"
+                                },
+                                {
+                                    name: "UNPAID AREA",
+                                    description: "UNPAID AREA"
+                                },
+                                {
+                                    name: "ENTRY EXIT CORRIDOR",
+                                    description: "ENTRY EXIT CORRIDOR"
+                                },
+                            ]
                         },
                         {
                             name: "Platform",
-                            description: "Subterranean boarding/alighting of trains with safety features."
+                            description: "Subterranean boarding/alighting of trains with safety features.",
+                            rooms: [
+                                {
+                                    name: "PLATFORM AREA-01",
+                                    description: "PLATFORM AREA-01"
+                                },
+                                {
+                                    name: "PLATFORM AREA-02",
+                                    description: "PLATFORM AREA-02"
+                                }
+                            ]
                         },
                         {
                             name: "Undercroft",
@@ -294,23 +424,223 @@ const migrateBuildingAndSubBuildings = async () => {
                     levels: [
                         {
                             name: "Ground Floor",
-                            description: "Reception, offices, and security."
+                            description: "Reception, offices, and security.",
+                            rooms: [
+                                {
+                                    name: "SIMULATOR",
+                                    description: "SIMULATOR"
+                                }
+                            ]
                         },
                         {
                             name: "First Floor",
-                            description: "Administrative offices and meeting rooms."
+                            description: "Administrative offices and meeting rooms.",
+                            rooms: [
+                                {
+                                    name: "SER(DEC)",
+                                    description: "SER(DEC)"
+                                }
+                            ]
                         },
                         {
                             name: "Second Floor",
-                            description: "Additional offices or technical staff areas."
+                            description: "Additional offices or technical staff areas.",
+                            rooms: [
+                                {
+                                    name: "TER(DEC)",
+                                    description: "TER(DEC)"
+                                }
+                            ]
                         },
                         {
                             name: "Third Floor",
-                            description: "Higher management offices or operations rooms."
+                            description: "Higher management offices or operations rooms.",
+                            rooms: [
+                                {
+                                    name: "MEETING ROOM",
+                                    description: "MEETING ROOM"
+                                }
+                            ]
                         },
                         {
                             name: "Terrace",
-                            description: "Open space for HVAC units or other utilities."
+                            description: "Open space for HVAC units or other utilities.",
+                            rooms: [
+                                {
+                                    name: "ELECTRICAL ROOM",
+                                    description: "ELECTRICAL ROOM"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Basement Level",
+                            description: "Open space for HVAC units or other utilities.",
+                            rooms: [
+                                {
+                                    name: "UPS ROOM",
+                                    description: "UPS ROOM"
+                                },
+                                {
+                                    name: "CANTEEN",
+                                    description: "CANTEEN"
+                                },
+                                {
+                                    name: "STORE",
+                                    description: "STORE"
+                                },
+                                {
+                                    name: "KITCHEN",
+                                    description: "KITCHEN"
+                                },
+                                {
+                                    name: "ELECTRICAL ROOM",
+                                    description: "ELECTRICAL ROOM"
+                                },
+                                {
+                                    name: "TOILET",
+                                    description: "TOILET"
+                                },
+                                {
+                                    name: "JANITOR",
+                                    description: "JANITOR"
+                                },
+                                {
+                                    name: "IT CONTRACTOR",
+                                    description: "IT CONTRACTOR"
+                                },
+                                {
+                                    name: "CORRIDOR",
+                                    description: "CORRIDOR"
+                                },
+                                {
+                                    name: "AFC SDC LAB",
+                                    description: "AFC SDC LAB"
+                                },
+                                {
+                                    name: "PSD LAB",
+                                    description: "PSD LAB"
+                                },
+                                {
+                                    name: "SCADA LAB",
+                                    description: "SCADA LAB"
+                                },
+                                {
+                                    name: "TELECOM LAB",
+                                    description: "TELECOM LAB"
+                                },
+                                {
+                                    name: "AFC CENTRAL WORKSTATION",
+                                    description: "AFC CENTRAL WORKSTATION"
+                                },
+                                {
+                                    name: "AFC CENTRAL SERVER ROOM",
+                                    description: "AFC CENTRAL SERVER ROOM"
+                                },
+                                {
+                                    name: "ANTI FRAUD REVENUE STORE ROOM",
+                                    description: "ANTI FRAUD REVENUE STORE ROOM"
+                                },
+                                {
+                                    name: "IT SERVER ROOM",
+                                    description: "IT SERVER ROOM"
+                                },
+                                {
+                                    name: "AFC MASTER CC ROOM",
+                                    description: "AFC MASTER CC ROOM"
+                                },
+                                {
+                                    name: "ENM SCADA",
+                                    description: "ENM SCADA"
+                                },
+                                {
+                                    name: "SMR",
+                                    description: "SMR"
+                                },
+                                {
+                                    name: "SNT STORE",
+                                    description: "SNT STORE"
+                                },
+                                {
+                                    name: "COMPUTER TRAINING ROOM",
+                                    description: "COMPUTER TRAINING ROOM"
+                                },
+                                {
+                                    name: "CER TELECOM",
+                                    description: "CER TELECOM"
+                                },
+                                {
+                                    name: "CER SIGNALLING",
+                                    description: "CER SIGNALLING"
+                                },
+                                {
+                                    name: "SCADA EQUIPMENT ROOM",
+                                    description: "SCADA EQUIPMENT ROOM"
+                                },
+                                {
+                                    name: "ONM OPERATOR",
+                                    description: "ONM OPERATOR"
+                                },
+                                {
+                                    name: "CSS NMS",
+                                    description: "CSS NMS"
+                                },
+                                {
+                                    name: "BMS PANEL ROOM",
+                                    description: "BMS PANEL ROOM"
+                                },
+                                {
+                                    name: "SIGNALLING LAB",
+                                    description: "SIGNALLING LAB"
+                                },
+                                {
+                                    name: "OFFICE",
+                                    description: "OFFICE"
+                                },
+                                {
+                                    name: "SECURITY CONTROL ROOM",
+                                    description: "SECURITY CONTROL ROOM"
+                                },
+                                {
+                                    name: "DCC ROOM",
+                                    description: "DCC ROOM"
+                                },
+                                {
+                                    name: "MEETING ROOM",
+                                    description: "MEETING ROOM"
+                                },
+                                {
+                                    name: "LOBBY",
+                                    description: "LOBBY"
+                                },
+                                {
+                                    name: "SPARE ROOM",
+                                    description: "SPARE ROOM"
+                                },
+                                {
+                                    name: "MAINTENANCE ROOM",
+                                    description: "MAINTENANCE ROOM"
+                                },
+                                {
+                                    name: "CONFERENCE ROOM",
+                                    description: "CONFERENCE ROOM"
+                                },
+                                {
+                                    name: "LIBRARY",
+                                    description: "LIBRARY"
+                                },
+                                {
+                                    name: "VR BIM LAB",
+                                    description: "VR BIM LAB"
+                                },
+                                {
+                                    name: "LECTURE HALL",
+                                    description: "LECTURE HALL"
+                                },
+                                {
+                                    name: "TRAINING COORDINATOR STAFF",
+                                    description: "TRAINING COORDINATOR STAFF"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -334,7 +664,13 @@ const migrateBuildingAndSubBuildings = async () => {
                     levels: [
                         {
                             name: "Ground Floor",
-                            description: "Pump operations."
+                            description: "Pump operations.",
+                            rooms: [
+                                {
+                                    name: "PUMP ROOM",
+                                    description: "PUMP ROOM"
+                                }
+                            ]
                         },
                         {
                             name: "Water Tank",
@@ -348,7 +684,13 @@ const migrateBuildingAndSubBuildings = async () => {
                     levels: [
                         {
                             name: "Ground Floor",
-                            description: "Space for electrical systems and backup equipment."
+                            description: "Space for electrical systems and backup equipment.",
+                            rooms: [
+                                {
+                                    name: "ASS ROOM",
+                                    description: "ASS ROOM"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -358,7 +700,13 @@ const migrateBuildingAndSubBuildings = async () => {
                     levels: [
                         {
                             name: "Ground Floor",
-                            description: "Automatic train washing equipment."
+                            description: "Automatic train washing equipment.",
+                            rooms: [
+                                {
+                                    name: "AUTO WASH PLANT ROOM",
+                                    description: "AUTO WASH PLANT ROOM"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -368,7 +716,17 @@ const migrateBuildingAndSubBuildings = async () => {
                     levels: [
                         {
                             name: "Ground Floor",
-                            description: "Toilet facilities for contractor staff."
+                            description: "Toilet facilities for contractor staff.",
+                            rooms: [
+                                {
+                                    name: "MALE TOILET AREA",
+                                    description: "MALE TOILET AREA"
+                                },
+                                {
+                                    name: "FEMALE TOILET AREA",
+                                    description: "FEMALE TOILET AREA"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -378,27 +736,45 @@ const migrateBuildingAndSubBuildings = async () => {
                     levels: [
                         {
                             name: "Ground Floor",
-                            description: "Air compressors for operational needs."
+                            description: "Air compressors for operational needs.",
+                            rooms: [
+                                {
+                                    name: "COMPRESSOR ROOM",
+                                    description: "COMPRESSOR ROOM"
+                                }
+                            ]
                         }
                     ]
                 },
                 {
-                    type: "Etu",
+                    type: "ETU",
                     description: "Electric Traction Unit for train movement systems.",
                     levels: [
                         {
                             name: "Ground Floor",
-                            description: "Manages electric traction systems for train movement."
+                            description: "Manages electric traction systems for train movement.",
+                            rooms: [
+                                {
+                                    name: "ETU ROOM",
+                                    description: "ETU ROOM"
+                                }
+                            ]
                         }
                     ]
                 },
                 {
-                    type: "Pit Wheel Lathe",
+                    type: "PIT Wheel Lathe",
                     description: "Facility for train wheel maintenance.",
                     levels: [
                         {
                             name: "Ground Floor",
-                            description: "Wheel maintenance and alignment operations."
+                            description: "Wheel maintenance and alignment operations.",
+                            rooms: [
+                                {
+                                    name: "PIT WHEEL LATHE ROOM",
+                                    description: "PIT WHEEL LATHE ROOM"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -408,7 +784,13 @@ const migrateBuildingAndSubBuildings = async () => {
                     levels: [
                         {
                             name: "Ground Floor",
-                            description: "Designated area for storing scrap materials."
+                            description: "Designated area for storing scrap materials.",
+                            rooms: [
+                                {
+                                    name: "SCRAP YARD",
+                                    description: "SCRAP YARD"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -418,7 +800,77 @@ const migrateBuildingAndSubBuildings = async () => {
                     levels: [
                         {
                             name: "Ground Floor",
-                            description: "Storage space for operational supplies."
+                            description: "Storage space for operational supplies.",
+                            rooms: [
+                                {
+                                    name: "SCRAP STORE-01",
+                                    description: "SCRAP STORE-01"
+                                },
+                                {
+                                    name: "SCRAP STORE-02",
+                                    description: "SCRAP STORE-02"
+                                },
+                                {
+                                    name: "SCRAP STORE-03",
+                                    description: "SCRAP STORE-03"
+                                },
+                                {
+                                    name: "STORE FOR BATTERIES",
+                                    description: "STORE FOR BATTERIES"
+                                },
+                                {
+                                    name: "STORE FOR OIL",
+                                    description: "STORE FOR OIL"
+                                },
+                                {
+                                    name: "HEAVY EQUIPMENT STORAGE AREA",
+                                    description: "HEAVY EQUIPMENT STORAGE AREA"
+                                },
+                                {
+                                    name: "CABLE STORAGE AREA",
+                                    description: "CABLE STORAGE AREA"
+                                },
+                                {
+                                    name: "CORRIDOR",
+                                    description: "CORRIDOR"
+                                },
+                                {
+                                    name: "STORE MANAGER ROOM",
+                                    description: "STORE MANAGER ROOM"
+                                },
+                                {
+                                    name: "WAITING AREA",
+                                    description: "WAITING AREA"
+                                },
+                                {
+                                    name: "PANTRY",
+                                    description: "PANTRY"
+                                },
+                                {
+                                    name: "JANITOR",
+                                    description: "JANITOR"
+                                },
+                                {
+                                    name: "TOILET",
+                                    description: "TOILET"
+                                },
+                                {
+                                    name: "MANAGERS OFFICE",
+                                    description: "MANAGERS OFFICE"
+                                },
+                                {
+                                    name: "ELECTRICAL ROOM",
+                                    description: "ELECTRICAL ROOM"
+                                },
+                                {
+                                    name: "VISITORS ROOM",
+                                    description: "VISITORS ROOM"
+                                },
+                                {
+                                    name: "INSPECTION RECEPTION AREA",
+                                    description: "INSPECTION RECEPTION AREA"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -428,7 +880,29 @@ const migrateBuildingAndSubBuildings = async () => {
                     levels: [
                         {
                             name: "Ground Floor",
-                            description: "Security and administrative functions."
+                            description: "Security and administrative functions.",
+                            rooms: [
+                                {
+                                    name: "TOILET",
+                                    description: "TOILET"
+                                },
+                                {
+                                    name: "GUARD CHANGING ROOM",
+                                    description: "GUARD CHANGING ROOM"
+                                },
+                                {
+                                    name: "LOBY",
+                                    description: "LOBY"
+                                },
+                                {
+                                    name: "WAITING AREA",
+                                    description: "WAITING AREA"
+                                },
+                                {
+                                    name: "GUARD ROOM",
+                                    description: "GUARD ROOM"
+                                },
+                            ]
                         }
                     ]
                 },
@@ -438,7 +912,17 @@ const migrateBuildingAndSubBuildings = async () => {
                     levels: [
                         {
                             name: "Ground Floor",
-                            description: "Space for welding and associated equipment."
+                            description: "Space for welding and associated equipment.",
+                            rooms: [
+                                {
+                                    name: "WELDING PLANT ROOM",
+                                    description: "WELDING PLANT ROOM"
+                                },
+                                {
+                                    name: "PIT AREA",
+                                    description: "PIT AREA"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -458,7 +942,13 @@ const migrateBuildingAndSubBuildings = async () => {
                     levels: [
                         {
                             name: "Ground Floor",
-                            description: "Designated area for train parking."
+                            description: "Designated area for train parking.",
+                            rooms: [
+                                {
+                                    name: "STABLING YARD AREA",
+                                    description: "STABLING YARD AREA"
+                                }
+                            ]
                         }
                     ]
                 }
