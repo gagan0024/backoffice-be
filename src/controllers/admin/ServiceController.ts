@@ -13,7 +13,8 @@ class ServiceController {
             const services = await Service.find();
 
             // Send the services object
-            res.status(ResponseCodes.SERVICE_LIST.code).type('json').send({
+            res.send({
+                status: ResponseCodes.SERVICE_LIST.code,
                 message: ResponseCodes.SERVICE_LIST.message,
                 data: services
             });
@@ -34,7 +35,8 @@ class ServiceController {
             if (!service) throw new NotFoundError(`Service with ID ${id} not found`);
 
             // Send the service object
-            res.status(ResponseCodes.SERVICE_DETAILS.code).type('json').send({
+            res.send({
+                status: ResponseCodes.SERVICE_DETAILS.code,
                 message: ResponseCodes.SERVICE_DETAILS.message,
                 data: service?.toJSON()
             });
@@ -55,7 +57,8 @@ class ServiceController {
             await service.save();
 
             // Send the created service object
-            res.status(ResponseCodes.SERVICE_CREATED.code).type('json').send({
+            res.send({
+                status: ResponseCodes.SERVICE_CREATED.code,
                 message: ResponseCodes.SERVICE_CREATED.message,
                 data: service.toJSON()
             });
@@ -95,7 +98,8 @@ class ServiceController {
             }
 
             // Send the updated service object
-            res.status(ResponseCodes.SERVICE_UPDATED.code).type('json').send({
+            res.send({
+                status: ResponseCodes.SERVICE_UPDATED.code,
                 message: ResponseCodes.SERVICE_UPDATED.message,
                 data: service.toJSON()
             });
@@ -119,7 +123,8 @@ class ServiceController {
             await service.delete();
 
             // Send a 204 response
-            res.status(ResponseCodes.SERVICE_DELETED.code).type('json').send({
+            res.send({
+                status: ResponseCodes.SERVICE_DELETED.code,
                 message: ResponseCodes.SERVICE_DELETED.message
             });
         } catch (error) {

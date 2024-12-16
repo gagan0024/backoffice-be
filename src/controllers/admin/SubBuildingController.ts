@@ -8,11 +8,21 @@ import { ResponseCodes } from '../../utils/constants';
 
 class SubBuildingController {
     static listAll = async (req: Request, res: Response, next: NextFunction) => {
-        // Execute the query
-        const subBuildings = await SubBuilding.find();
+        // Get the Building ID from the url
+        const { building_id } = req.query; // Access query parameter
+        let subBuildings = []
+
+        if (building_id) {
+            // Execute the query with building_id
+            subBuildings = await SubBuilding.find({ building_id });
+        } else {
+            // Execute the query
+            subBuildings = await SubBuilding.find();
+        }
 
         // Send the subBuildings object
-        res.status(ResponseCodes.SUB_BUILDING_LIST.code).type('json').send({
+        res.send({
+            status: ResponseCodes.SUB_BUILDING_LIST.code,
             message: ResponseCodes.SUB_BUILDING_LIST.message,
             data: subBuildings
         });
@@ -26,7 +36,8 @@ class SubBuildingController {
         const subBuilding = await SubBuilding.findById(id);
         if (!subBuilding) throw new NotFoundError(`Sub Building with ID ${id} not found`);
 
-        res.status(ResponseCodes.SUB_BUILDING_DETAILS.code).type('json').send({
+        res.send({
+            status: ResponseCodes.SUB_BUILDING_DETAILS.code,
             message: ResponseCodes.SUB_BUILDING_DETAILS.message,
             data: subBuilding?.toJSON()
         });
@@ -49,7 +60,8 @@ class SubBuildingController {
         }
 
         // If all ok, send response
-        res.status(ResponseCodes.SUB_BUILDING_CREATED.code).type('json').send({
+        res.send({
+            status: ResponseCodes.SUB_BUILDING_CREATED.code,
             message: ResponseCodes.SUB_BUILDING_CREATED.message,
             data: building.toJSON()
         });
@@ -79,7 +91,8 @@ class SubBuildingController {
             throw new ClientError(processErrors(error));
         }
 
-        res.status(ResponseCodes.SUB_BUILDING_UPDATED.code).type('json').send({
+        res.send({
+            status: ResponseCodes.SUB_BUILDING_UPDATED.code,
             message: ResponseCodes.SUB_BUILDING_UPDATED.message,
             data: subBuilding.toJSON()
         });
@@ -96,7 +109,8 @@ class SubBuildingController {
         await subBuilding.delete();
 
         // After all send response
-        res.status(ResponseCodes.SUB_BUILDING_DELETED.code).type('json').send({
+        res.send({
+            status: ResponseCodes.SUB_BUILDING_DELETED.code,
             message: ResponseCodes.SUB_BUILDING_DELETED.message
         });
     };

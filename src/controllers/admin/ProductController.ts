@@ -9,13 +9,23 @@ import { ResponseCodes } from '../../utils/constants';
 class ProductController {
     static listAll = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            // Fetch all products and populate service details
-            const products = await Product.find()
-                .populate('sub_service_id', ['_id', 'name', 'description', 'image'])
-                .select(['_id', 'name', 'capacity', 'vendors', 'sub_service', 'service_id']);
+            // Get the Service ID from the url
+            const { sub_service_id } = req.query; // Access query parameter
+            let products = []
+
+            if (sub_service_id) {
+                // Execute the query with service_id
+                products = await Product.find({ sub_service_id })
+                    .populate('sub_service_id', ['_id', 'name', 'description', 'image']);
+            } else {
+                // Execute the query
+                products = await Product.find()
+                    .populate('sub_service_id', ['_id', 'name', 'description', 'image']);
+            }
 
             // Send the products object
-            res.status(ResponseCodes.PRODUCT_LIST.code).type('json').send({
+            res.send({
+                status: ResponseCodes.PRODUCT_LIST.code,
                 message: ResponseCodes.PRODUCT_LIST.message,
                 data: products
             });
@@ -38,7 +48,8 @@ class ProductController {
             if (!product) throw new NotFoundError(`Product with ID ${id} not found`);
 
             // Send the product object
-            res.status(ResponseCodes.PRODUCT_DETAILS.code).type('json').send({
+            res.send({
+                status: ResponseCodes.PRODUCT_DETAILS.code,
                 message: ResponseCodes.PRODUCT_DETAILS.message,
                 data: product.toJSON()
             });
@@ -59,7 +70,8 @@ class ProductController {
             await product.save();
 
             // Send the created product object
-            res.status(ResponseCodes.PRODUCT_CREATED.code).type('json').send({
+            res.send({
+                status: ResponseCodes.PRODUCT_CREATED.code,
                 message: ResponseCodes.PRODUCT_CREATED.message,
                 data: product.toJSON()
             });
@@ -108,7 +120,8 @@ class ProductController {
             }
 
             // Send the updated product object
-            res.status(ResponseCodes.PRODUCT_UPDATED.code).type('json').send({
+            res.send({
+                status: ResponseCodes.PRODUCT_UPDATED.code,
                 message: ResponseCodes.PRODUCT_UPDATED.message,
                 data: product.toJSON()
             });
@@ -132,7 +145,8 @@ class ProductController {
             await product.delete();
 
             // Send a 204 response
-            res.status(ResponseCodes.PRODUCT_DELETED.code).type('json').send({
+            res.send({
+                status: ResponseCodes.PRODUCT_DELETED.code,
                 message: ResponseCodes.PRODUCT_DELETED.message,
             });
         } catch (error) {

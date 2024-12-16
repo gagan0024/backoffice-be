@@ -9,11 +9,21 @@ import { ResponseCodes } from '../../utils/constants';
 class SubServiceController {
     static listAll = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            // Fetch all services with the selected fields
-            const subServices = await SubService.find();
+            // Get the Service ID from the url
+            const { service_id } = req.query; // Access query parameter
+            let subServices = []
+
+            if (service_id) {
+                // Execute the query with service_id
+                subServices = await SubService.find({ service_id });
+            } else {
+                // Execute the query
+                subServices = await SubService.find();
+            }
 
             // Send the subServices object
-            res.status(ResponseCodes.SUB_SERVICE_LIST.code).type('json').send({
+            res.send({
+                status: ResponseCodes.SUB_SERVICE_LIST.code,
                 message: ResponseCodes.SUB_SERVICE_LIST.message,
                 data: subServices
             });
@@ -34,7 +44,8 @@ class SubServiceController {
             if (!subService) throw new NotFoundError(`Sub Service with ID ${id} not found`);
 
             // Send the sub service object
-            res.status(ResponseCodes.SUB_SERVICE_DETAILS.code).type('json').send({
+            res.send({
+                status: ResponseCodes.SUB_SERVICE_DETAILS.code,
                 message: ResponseCodes.SUB_SERVICE_DETAILS.message,
                 data: subService?.toJSON()
             });
@@ -55,7 +66,8 @@ class SubServiceController {
             await subService.save();
 
             // Send the created subService object
-            res.status(ResponseCodes.SUB_SERVICE_CREATED.code).type('json').send({
+            res.send({
+                status: ResponseCodes.SUB_SERVICE_CREATED.code,
                 message: ResponseCodes.SUB_SERVICE_CREATED.message,
                 data: subService.toJSON()
             });
@@ -96,7 +108,8 @@ class SubServiceController {
             }
 
             // Send the updated service object
-            res.status(ResponseCodes.SUB_SERVICE_UPDATED.code).type('json').send({
+            res.send({
+                status: ResponseCodes.SUB_SERVICE_UPDATED.code,
                 message: ResponseCodes.SUB_SERVICE_UPDATED.message,
                 data: subService.toJSON()
             });
@@ -120,7 +133,8 @@ class SubServiceController {
             await subService.delete();
 
             // Send a 204 response
-            res.status(ResponseCodes.SUB_SERVICE_DELETED.code).type('json').send({
+            res.send({
+                status: ResponseCodes.SUB_SERVICE_DELETED.code,
                 message: ResponseCodes.SUB_SERVICE_DELETED.message
             });
         } catch (error) {
