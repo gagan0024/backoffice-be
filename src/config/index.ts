@@ -10,7 +10,7 @@ const config = {
     },
     port: process.env.PORT || 8080,
     prefix: process.env.API_PREFIX || 'api',
-    databaseUri: process.env.MONGODB_URI || 'mongodb://admin:designdrafter@mongodb-service:27017/'
+    databaseUri: process.env.MONGODB_URI || 'mongodb://admin:designdrafter@mongodb-service:27017/manas'
 };
 
 export default config;
