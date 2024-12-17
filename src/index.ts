@@ -78,10 +78,12 @@ app.use(errorHandler);
 //         }
 
 //         // Start the server only if DB connection succeeds
-//         app.listen(config.port, (): void => {
-//             console.log(`Server is listening on port ${config.port}`);
-//         });
+
 //     })
 //     .catch((err: unknown): void => {
 //         console.error('Initial Database connection error occurred -', err);
 //     });
+
+    app.listen(config.port, (): void => {
+      console.log(`Server is listening on port ${config.port}`);
+  });
