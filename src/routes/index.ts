@@ -10,6 +10,7 @@ import service from './admin/service'
 import subService from './admin/sub-service'
 import action from './admin/action'
 import product from './admin/product'
+import finalDesign from './admin/final-design'
 import { NotFoundError } from '../exceptions/notFoundError';
 
 const routes = Router();
@@ -26,6 +27,7 @@ routes.use('/admin/services', service);
 routes.use('/admin/sub-services', subService);
 routes.use('/admin/actions', action);
 routes.use('/admin/products', product);
+routes.use('/admin/final-designs', finalDesign);
 
 // Handle not found routes
 routes.use((req: Request, res: Response, next: NextFunction) => {

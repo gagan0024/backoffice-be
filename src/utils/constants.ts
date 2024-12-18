@@ -60,6 +60,13 @@ export const ResponseCodes = {
     ACTION_UPDATED: { code: 3024, message: "Action updated successfully" },
     ACTION_DELETED: { code: 3025, message: "Action deleted successfully" },
 
+    // Final Design Data response codes
+    FINAL_DESIGN_DATA_CREATED: { code: 3031, message: "Final Design Data created successfully" },
+    FINAL_DESIGN_DATA_LIST: { code: 3032, message: "Final Design Data list fetched successfully" },
+    FINAL_DESIGN_DATA_DETAILS: { code: 3033, message: "Final Design Data details fetched successfully" },
+    FINAL_DESIGN_DATA_UPDATED: { code: 3034, message: "Final Design Data updated successfully" },
+    FINAL_DESIGN_DATA_DELETED: { code: 3035, message: "Final Design Data deleted successfully" },
+
     // Product response codes
     PRODUCT_CREATED: { code: 4001, message: "Product created successfully" },
     PRODUCT_LIST: { code: 4002, message: "Product list fetched successfully" },

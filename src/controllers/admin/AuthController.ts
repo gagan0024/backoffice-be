@@ -26,7 +26,7 @@ class AuthController {
 
         // Sing JWT, valid for 1 hour
         const token = sign({ userId: user._id.toString(), email: user.email, role: user.role }, config.jwt.secret!, {
-            expiresIn: '1h',
+            expiresIn: '7d',
             notBefore: '0', // Cannot use before now, can be configured to be deferred
             algorithm: 'HS256',
             audience: config.jwt.audience,

@@ -8,11 +8,21 @@ import { ResponseCodes } from '../../utils/constants';
 
 class ActionController {
     static listAll = async (req: Request, res: Response, next: NextFunction) => {
-        // Execute the query
-        const actions = await Action.find();
+        // Get the Sub Service ID from the url
+        const { sub_service_id } = req.query; // Access query parameter
+        let actions = []
+
+        if (sub_service_id) {
+            // Execute the query with sub_service_id
+            actions = await Action.find({ sub_service_id }).populate('sub_service_id');
+        } else {
+            // Execute the query
+            actions = await Action.find().populate('sub_service_id');
+        }
 
         // Send the actions object
-        res.status(ResponseCodes.ACTION_LIST.code).type('json').send({
+        res.send({
+            status: ResponseCodes.ACTION_LIST.code,
             message: ResponseCodes.ACTION_LIST.message,
             data: actions
         });
@@ -26,7 +36,8 @@ class ActionController {
         const action = await Action.findById(id);
         if (!action) throw new NotFoundError(`Action with ID ${id} not found`);
 
-        res.status(ResponseCodes.ACTION_DETAILS.code).type('json').send({
+        res.send({
+            status: ResponseCodes.ACTION_DETAILS.code,
             message: ResponseCodes.ACTION_DETAILS.message,
             data: action?.toJSON()
         });
@@ -49,7 +60,8 @@ class ActionController {
         }
 
         // If all ok, send response
-        res.status(ResponseCodes.ACTION_CREATED.code).type('json').send({
+        res.send({
+            status: ResponseCodes.ACTION_CREATED.code,
             message: ResponseCodes.ACTION_CREATED.message,
             data: action.toJSON()
         });
@@ -79,7 +91,8 @@ class ActionController {
             throw new ClientError(processErrors(error));
         }
 
-        res.status(ResponseCodes.ACTION_UPDATED.code).type('json').send({
+        res.send({
+            status: ResponseCodes.ACTION_UPDATED.code,
             message: ResponseCodes.ACTION_UPDATED.message,
             data: action.toJSON()
         });
@@ -96,7 +109,8 @@ class ActionController {
         await action.delete();
 
         // After all send response
-        res.status(ResponseCodes.ACTION_DELETED.code).type('json').send({
+        res.send({
+            status: ResponseCodes.ACTION_DELETED.code,
             message: ResponseCodes.ACTION_DELETED.message
         });
     };
