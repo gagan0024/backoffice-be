@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 export interface IAction {
     name: string;
     description: string;
+    calculation_type: string;
     sub_service_id: mongoose.Types.ObjectId;
 }
 
@@ -11,6 +12,7 @@ export interface IAction {
 interface ActionDoc extends mongoose.Document {
     name: string;
     description: string;
+    calculation_type: string;
     sub_service_id: mongoose.Types.ObjectId;
 }
 
@@ -29,6 +31,13 @@ const actionSchema = new mongoose.Schema<IAction>(
             required: true,
             trim: true,
             maxLength: [500, 'Description too long'],
+        },
+        calculation_type: {
+            type: String,
+            required: true,
+            trim: true,
+            minLength: [2, 'Calculation Type too short'],
+            maxLength: [50, 'Calculation Type too long'],
         },
         sub_service_id: {
             type: mongoose.Schema.Types.ObjectId,

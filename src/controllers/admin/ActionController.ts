@@ -45,11 +45,11 @@ class ActionController {
 
     static newAction = async (req: Request, res: Response, next: NextFunction) => {
         // Get parameters from the body
-        const { sub_service_id, name, description } = req.body;
+        const { sub_service_id, name, description, calculation_type } = req.body;
         let action;
 
         try {
-            action = Action.build({ sub_service_id, name, description } as IAction);
+            action = Action.build({ sub_service_id, name, description, calculation_type } as IAction);
 
             // Save the action
             await action.save();
@@ -72,7 +72,7 @@ class ActionController {
         const id = req.params.id;
 
         // Get values from the body
-        const { sub_service_id, name, description } = req.body;
+        const { sub_service_id, name, description, calculation_type } = req.body;
 
         // Mongoose automatically casts the id to ObjectID
         const action = await Action.findById(id);
@@ -82,6 +82,7 @@ class ActionController {
         action.sub_service_id = sub_service_id
         action.name = name
         action.description = description
+        action.calculation_type = calculation_type
 
         // Save and catch all validation errors
         try {
