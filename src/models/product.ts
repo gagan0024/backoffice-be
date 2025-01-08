@@ -6,6 +6,7 @@ export interface IProduct {
     type?: string[];
     capacity?: string;
     vendors: string[];
+    factors: string[];
     sub_service_id: mongoose.Schema.Types.ObjectId; // Reference to the Sub Service
 }
 
@@ -15,6 +16,7 @@ interface ProductDoc extends mongoose.Document {
     type?: string[];
     capacity?: string;
     vendors: string[];
+    factors: string[];
     sub_service_id: mongoose.Schema.Types.ObjectId;
 }
 
@@ -35,6 +37,10 @@ const productSchema = new mongoose.Schema<IProduct>(
             trim: true,
         },
         vendors: {
+            type: [String],
+            trim: true,
+        },
+        factors: {
             type: [String],
             trim: true,
         },
