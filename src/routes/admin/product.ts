@@ -9,19 +9,22 @@ import { checkRole } from '../../middleware/checkRole';
 
 const router = Router();
 
-// Get all locations
+// Get all products
 router.get('/', [checkJwt, checkRole([ROLES.USER, ROLES.ADMIN])], asyncHandler(ProductController.listAll));
 
-// Get one location
+// Get one product
 router.get('/:id([0-9a-z]{24})', [checkJwt, checkRole([ROLES.USER, ROLES.ADMIN])], asyncHandler(ProductController.getOneById));
 
-// Create a new location
+// Create a new product
 router.post('/', [checkJwt, checkRole([ROLES.USER, ROLES.ADMIN])], asyncHandler(ProductController.newProduct));
 
-// Edit one location
+// Edit one product
 router.patch('/:id([0-9a-z]{24})', [checkJwt, checkRole([ROLES.USER, ROLES.ADMIN])], asyncHandler(ProductController.editProduct));
 
-// Delete one location
+// Delete one product
 router.delete('/:id([0-9a-z]{24})', [checkJwt, checkRole([ROLES.ADMIN])], asyncHandler(ProductController.deleteProduct));
+
+// Get all product categories
+router.get('/categories', [checkJwt, checkRole([ROLES.USER, ROLES.ADMIN])], asyncHandler(ProductController.listProductCategories));
 
 export default router;

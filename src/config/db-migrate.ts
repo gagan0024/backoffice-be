@@ -6,11 +6,13 @@ import { Service } from '../models/service';
 import { SubService } from '../models/sub-service';
 import { Types } from 'mongoose';
 import { Room } from '../models/room';
+import { IProductCategory, ProductCategory } from '../models/product';
 
 const migrate = async (): Promise<any> => {
     await migrateLocations();
     await migrateBuildingAndSubBuildings()
     await migrateServiceAndSubServices()
+    await migrateProductCategories()
 }
 
 const migrateLocations = async () => {
@@ -1194,6 +1196,113 @@ const migrateServiceAndSubServices = async () => {
         console.error('Error inserting/updating services and sub-services:', error);
     }
 
+}
+
+const migrateProductCategories = async () => {
+    const productCategories = [
+        {
+            name: 'IDU',
+            description: '',
+            factors: [
+                "Model Number",
+                "Airflow (CFM)",
+                "Cooling/Heating Capacity (kW or Tons)",
+                "Noise Levels (dB)",
+                "Air Filtration (MERV Rating)",
+                "Energy Efficiency (EER or SEER)",
+                "Temperature and Humidity Control",
+                "Size",
+                "Control System (Smart/Manual)",
+                "Reliability and Maintenance"
+            ]
+        } as IProductCategory,
+        {
+            name: 'ODU',
+            description: '',
+            factors: [
+                "Model Number",
+                "Cooling/Heating Capacity (kW or Tons)",
+                "Compressor Type (Scroll, Rotary, Reciprocating)",
+                "Energy Efficiency (EER, COP, or SEER)",
+                "Size and Space Availability",
+                "Noise Levels (dB)",
+                "Refrigerant Type (R-410A, R-32, etc.)",
+                "Outdoor Air Conditions (Ambient Temperature, Humidity)",
+                "Reliability and Durability",
+                "Anti-corrosion Protection",
+                "Control System Integration (BMS, Remote Control)"
+            ]
+        } as IProductCategory,
+        {
+            name: 'AHU',
+            description: '',
+            factors: [
+                "Model Number",
+                "Airflow (CFM - Cubic Feet per Minute)",
+                "Cooling and Heating Capacity (Tons or kW)",
+                "Air Filtration Efficiency (MERV Rating)",
+                "Fan Type and Efficiency",
+                "External Static Pressure (ESP)",
+                "Noise Levels (dB - Decibels)",
+                "Energy Efficiency (EER - Energy Efficiency Ratio)",
+                "Temperature and Humidity Control",
+                "Size and Physical Dimensions",
+                "Control Systems (Automation and Monitoring)",
+                "Environmental Conditions",
+                "Reliability and Redundancy",
+                "Maintenance Requirements",
+                "Compliance with Regulations and Standards"
+            ]
+        } as IProductCategory,
+        {
+            name: 'CHILLER',
+            description: '',
+            factors: [
+                "Model Number",
+                "Cooling Capacity (kW or Tons)",
+                "Energy Efficiency (COP, EER, SEER)",
+                "Type of Chiller (Air-Cooled vs Water-Cooled)",
+                "Refrigerant Type (R-134a, R-410A, R-1234ze, etc.)",
+                "Heat Exchanger Type (Shell and Tube, Plate)",
+                "Compressor Type (Screw, Scroll, Centrifugal, Reciprocating)",
+                "Control Systems (Smart Controls, BMS Integration)",
+                "Ambient Temperature Range (Outdoor Conditions)",
+                "Size and Footprint",
+                "Reliability and Durability",
+                "Maintenance and Serviceability",
+                "Environmental Impact (Noise, Emissions, etc.)"
+            ]
+        } as IProductCategory,
+        {
+            name: 'FANS',
+            description: '',
+            factors: [
+                "Model Number",
+                "Airflow Requirement (CFM or m³/h)",
+                "Fan Efficiency (Static Efficiency, Dynamic Efficiency)",
+                "Pressure (Static Pressure, Total Pressure)",
+                "Noise Levels",
+                "Fan Size and Footprint",
+                "Power Requirements (Motor Size)",
+                "Durability and Material Selection",
+                "Mounting Type (Wall-mounted, Ceiling-mounted, Duct-mounted)",
+                "Speed Control (Fixed or Variable Speed)"
+            ]
+        } as IProductCategory
+    ]
+    try {
+        const bulkOps = productCategories.map((category) => ({
+            updateOne: {
+                filter: { name: category.name },
+                update: { $set: category },
+                upsert: true,
+            },
+        }));
+        const result = await ProductCategory.bulkWrite(bulkOps);
+        console.log("Product Categories Upsert Result:", result.isOk());
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 export { migrate }

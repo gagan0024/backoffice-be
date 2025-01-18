@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { Error } from 'mongoose';
 import { ClientError } from '../../exceptions/clientError';
 import { NotFoundError } from '../../exceptions/notFoundError';
-import { Product, IProduct } from '../../models/product';
+import { Product, IProduct, ProductCategory } from '../../models/product';
 import { processErrors } from '../../utils/errorProcessing';
 import { ResponseCodes } from '../../utils/constants';
 
@@ -149,6 +149,21 @@ class ProductController {
             res.send({
                 status: ResponseCodes.PRODUCT_DELETED.code,
                 message: ResponseCodes.PRODUCT_DELETED.message,
+            });
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    static listProductCategories = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const productCategories = await ProductCategory.find();
+
+            // Send the products object
+            res.send({
+                status: ResponseCodes.PRODUCT_CATEGORY_LIST.code,
+                message: ResponseCodes.PRODUCT_CATEGORY_LIST.message,
+                data: productCategories
             });
         } catch (error) {
             next(error);
