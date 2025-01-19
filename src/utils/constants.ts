@@ -74,4 +74,7 @@ export const ResponseCodes = {
     PRODUCT_UPDATED: { code: 4004, message: "Product updated successfully" },
     PRODUCT_DELETED: { code: 4005, message: "Product deleted successfully" },
     PRODUCT_CATEGORY_LIST: { code: 4010, message: "Product category list fetched successfully" },
+
+    // Product response codes
+    CALCULATION_RESULT: { code: 9001, message: "Calculation results fetched successfully" },
 }

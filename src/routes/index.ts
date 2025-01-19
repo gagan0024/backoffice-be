@@ -11,6 +11,8 @@ import subService from './admin/sub-service'
 import action from './admin/action'
 import product from './admin/product'
 import finalDesign from './admin/final-design'
+
+import calculation from './public/calculation'
 import { NotFoundError } from '../exceptions/notFoundError';
 
 const routes = Router();
@@ -28,6 +30,9 @@ routes.use('/admin/sub-services', subService);
 routes.use('/admin/actions', action);
 routes.use('/admin/products', product);
 routes.use('/admin/final-designs', finalDesign);
+
+// Public routes
+routes.use('/data', calculation);
 
 // Handle not found routes
 routes.use((req: Request, res: Response, next: NextFunction) => {
