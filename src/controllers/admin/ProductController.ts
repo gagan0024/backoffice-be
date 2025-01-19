@@ -60,11 +60,11 @@ class ProductController {
 
     static newProduct = async (req: Request, res: Response, next: NextFunction) => {
         // Get parameters from the body
-        const { name, type, capacity, vendors, factors, sub_service_id } = req.body;
+        const { name, type, capacity, vendors, factors, sub_service_id, category_id } = req.body;
 
         try {
             // Build a new Product instance
-            const product = Product.build({ name, type, capacity, vendors, factors, sub_service_id } as IProduct);
+            const product = Product.build({ name, type, capacity, vendors, factors, sub_service_id, category_id } as IProduct);
 
             // Save the product to the database
             await product.save();
@@ -89,7 +89,7 @@ class ProductController {
             const id: string = req.params.id;
 
             // Get updated details from the body
-            const { name, type, capacity, vendors, factors, sub_service_id } = req.body;
+            const { name, type, capacity, vendors, factors, sub_service_id, category_id } = req.body;
 
             // Find the product by ID
             const product = await Product.findById(id).select([
@@ -99,6 +99,7 @@ class ProductController {
                 'capacity',
                 'vendors',
                 'sub_service_id',
+                'category_id'
             ]);
 
             // Throw an error if the product is not found
@@ -111,6 +112,7 @@ class ProductController {
             product.vendors = vendors;
             product.factors = factors;
             product.sub_service_id = sub_service_id;
+            product.category_id = category_id;
 
             // Save the updated product and catch validation errors
             try {
