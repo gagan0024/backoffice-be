@@ -63,18 +63,13 @@ export { ProductCategory };
 
 // --------------------------------- Product Schema ---------------------------------------//
 
-interface Factor {
-    name: string;
-    value: string;
-}
-
 // Interface for the Product attributes
 export interface IProduct {
     name: string;
     type?: string[];
     capacity?: string;
     vendors: string[];
-    factors: Factor[];
+    factors: { [key: string]: any }[];
     sub_service_id: mongoose.Schema.Types.ObjectId; // Reference to the Sub Service
     category_id?: mongoose.Schema.Types.ObjectId; // Reference to ProductCategory
 }
@@ -85,15 +80,10 @@ interface ProductDoc extends mongoose.Document {
     type?: string[];
     capacity?: string;
     vendors: string[];
-    factors: Factor[];
+    factors: { [key: string]: any }[];
     sub_service_id: mongoose.Schema.Types.ObjectId;
     category_id?: mongoose.Schema.Types.ObjectId; // Reference to ProductCategory
 }
-
-const factorSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    value: { type: String, required: true }
-});
 
 // Product Schema
 const productSchema = new mongoose.Schema<IProduct>(
@@ -116,7 +106,8 @@ const productSchema = new mongoose.Schema<IProduct>(
             trim: true,
         },
         factors: {
-            type: [factorSchema],
+            type: [Object],
+            default: []
         },
         sub_service_id: {
             type: mongoose.Schema.Types.ObjectId,
