@@ -1,20 +1,20 @@
-import express, { Application, Request, Response } from 'express';
-import mongoose, { ConnectOptions, Error as MongooseError } from 'mongoose';
-import { json } from 'body-parser';
-import cors from 'cors';
-import routes from './routes/index';
+import express, { Application, Request, Response } from "express";
+import mongoose, { ConnectOptions, Error as MongooseError } from "mongoose";
+import { json } from "body-parser";
+import cors from "cors";
+import routes from "./routes/index";
 
 // Middleware
-import { errorHandler } from './middleware/errorHandler';
-import config from './config';
+import { errorHandler } from "./middleware/errorHandler";
+import config from "./config";
 
 // Imports for creating a default user of type admin
-import { User, IUser } from './models/user';
+import { User, IUser } from "./models/user";
 
-import { ClientError } from './exceptions/clientError';
-import { processErrors } from './utils/errorProcessing';
-import { ROLES } from './utils/constants';
-import { migrate } from './config/db-migrate';
+import { ClientError } from "./exceptions/clientError";
+import { processErrors } from "./utils/errorProcessing";
+import { ROLES } from "./utils/constants";
+import { migrate } from "./config/db-migrate";
 
 const app: Application = express();
 
@@ -28,62 +28,90 @@ app.use(json());
 app.use(`/${config.prefix}`, routes);
 
 // Define the welcome route
-app.get('/health', (req: Request, res: Response): void => {
-    res.send('Welcome! Your server is running perfectly.');
+app.get("/health", (req: Request, res: Response): void => {
+  res.send("Welcome! Your server is running perfectly.");
 });
 
 // Add error handling middleware
 app.use(errorHandler);
 
 // Configure mongoose globally
-mongoose.set('strictQuery', true);
+mongoose.set("strictQuery", true);
 
 // Connect to the database
 mongoose
-    .connect(
-        config.databaseUri!,
-        {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        } as ConnectOptions // Explicitly cast options to ConnectOptions
-    )
-    .then(async (): Promise<void> => {
-        console.log('Connected to Database - Initial Connection');
+  .connect(
+    config.databaseUri!,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    } as ConnectOptions // Explicitly cast options to ConnectOptions
+  )
+  .then(async (): Promise<void> => {
+    console.log("Connected to Database - Initial Connection ");
 
-        // Create default admin user if it doesn't exist
-        try {
-            // Migrate default static/fixed data into database
-            await migrate()
-            const existingAdmin = await User.findOne({ email: 'admin@gmail.com', role: ROLES.ADMIN });
-            if (!existingAdmin) {
-                console.log('***** Creating Default Admin *****');
+    // Create default admin user if it doesn't exist
+    try {
+      // Migrate default static/fixed data into database
+      await migrate();
+      const existingAdmin = await User.findOne({
+        email: "admin@gmail.com",
+        role: ROLES.ADMIN,
+      });
+      const existingProductAdmin = await User.findOne({
+        email: "productAdmin@gmail.com",
+        role: ROLES.PRODUCT_ADMIN,
+      });
+      const existingTechnicalAdmin = await User.findOne({
+        email: "technicalAdmin@gmail.com",
+        role: ROLES.TECHNICAL_ADMIN,
+      });
+      if (!existingAdmin || !existingProductAdmin || !existingTechnicalAdmin) {
+        console.log("***** Creating Default Admin *****");
 
-                const user = User.build({
-                    email: 'admin@gmail.com',
-                    password: '12345678',
-                    role: ROLES.ADMIN,
-                } as IUser);
+        const user = User.build({
+          email: "admin@gmail.com",
+          password: "12345678",
+          role: ROLES.ADMIN,
+        } as IUser);
 
-                // Save the user
-                await user.save();
-            }
-        } catch (e: unknown) {
-            console.error(e);
+        // const user1 = User.build({
+        //   email: "productAdmin@gmail.com",
+        //   password: "123456789",
+        //   role: ROLES.PRODUCT_ADMIN,
+        // } as IUser);
 
-            if (e instanceof MongooseError.ValidationError) {
-                throw new ClientError(processErrors(e));
-            } else {
-                throw new ClientError('An unexpected error occurred.');
-            }
-        }
+        const user2 = User.build({
+          email: "technicalAdmin@gmail.com",
+          password: "1234567890",
+          role: ROLES.TECHNICAL_ADMIN,
+        } as IUser);
 
-        // Start the server only if DB connection succeeds
+        // Save the user
+        await user.save();
+        // await user1.save();
+        // await user2.save();
+      }
+    } catch (e: unknown) {
+      console.error(e);
 
-    })
-    .catch((err: unknown): void => {
-        console.error('Initial Database connection error occurred -', err);
-    });
+      if (e instanceof MongooseError.ValidationError) {
+        throw new ClientError(processErrors(e));
+      } else {
+        throw new ClientError("An unexpected error occurred.");
+      }
+    }
 
-    app.listen(config.port, (): void => {
-      console.log(`Server is listening on port ${config.port}`);
+    // Start the server only if DB connection succeeds
+  })
+  .catch((err: unknown): void => {
+    console.error("Initial Database connection error occurred -", err);
   });
+
+app.listen(config.port, (): void => {
+  console.log(`Server is listening on port ${config.port}`);
+  console.log(
+    "Server running on:",
+    `http://${process.env.HOST || "localhost"}:${process.env.PORT || 3000}`
+  );
+});
