@@ -1,11 +1,11 @@
 import { Router } from "express";
-import ProductController from "../../controllers/admin/ProductController";
 import { ROLES } from "../../utils/constants";
 
 // Middleware
 import { asyncHandler } from "../../middleware/asyncHandler";
 import { checkJwt } from "../../middleware/checkJwt";
 import { checkRole } from "../../middleware/checkRole";
+import ManufacturerController from "../../controllers/admin/ManufacturerController";
 
 const router = Router();
 
@@ -13,35 +13,35 @@ const router = Router();
 router.get(
   "/",
   [checkJwt, checkRole([ROLES.USER, ROLES.ADMIN])],
-  asyncHandler(ProductController.listAll)
+  asyncHandler(ManufacturerController.listAll)
 );
 
 // Get one product
 router.get(
   "/:id([0-9a-z]{24})",
   [checkJwt, checkRole([ROLES.USER, ROLES.ADMIN])],
-  asyncHandler(ProductController.getOneById)
+  asyncHandler(ManufacturerController.getOneById)
 );
 
 // Create a new product
 router.post(
   "/",
   [checkJwt, checkRole([ROLES.USER, ROLES.ADMIN])],
-  asyncHandler(ProductController.newProduct)
+  asyncHandler(ManufacturerController.newManufacturer)
 );
 
 // Edit one product
 router.patch(
   "/:id([0-9a-z]{24})",
   [checkJwt, checkRole([ROLES.USER, ROLES.ADMIN])],
-  asyncHandler(ProductController.editProduct)
+  asyncHandler(ManufacturerController.editManufacturer)
 );
 
 // Delete one product
 router.delete(
   "/:id([0-9a-z]{24})",
   [checkJwt, checkRole([ROLES.ADMIN])],
-  asyncHandler(ProductController.deleteProduct)
+  asyncHandler(ManufacturerController.deleteManufacturer)
 );
 
 export default router;

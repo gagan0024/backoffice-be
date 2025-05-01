@@ -1,152 +1,69 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-// Product Category
-
-// Interface for ProductCategory attributes
-export interface IProductCategory {
-    name: string;
-    description?: string;
-    factors: string[]
-}
-
-// Interface for ProductCategory Document (instance methods)
-interface ProductCategoryDoc extends mongoose.Document {
-    name: string;
-    description?: string;
-    factors: string[]
-}
-
-// ProductCategory Schema
-const productCategorySchema = new mongoose.Schema<IProductCategory>(
-    {
-        name: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        description: {
-            type: String,
-            trim: true,
-        },
-        factors: {
-            type: [String],
-            trim: true,
-        },
-    },
-    { timestamps: true } // Automatically include createdAt and updatedAt fields
-);
-
-// Interface for the Product Model (static methods)
-interface ProductCategoryModelInterface extends mongoose.Model<ProductCategoryDoc> {
-    build(attr: IProductCategory): ProductCategoryDoc;
-}
-
-// Static `build` method for creating new Product instances
-productCategorySchema.statics.build = (attr: IProductCategory) => {
-    return new ProductCategory(attr);
-};
-
-// JSON transformation to remove sensitive/unnecessary fields
-productCategorySchema.set('toJSON', {
-    transform: (document, returnedObject) => {
-        returnedObject.id = returnedObject._id.toString();
-        delete returnedObject._id;
-        delete returnedObject.__v;
-    },
-});
-
-// Create the ProductCategory model
-const ProductCategory = mongoose.model<ProductCategoryDoc>('ProductCategory', productCategorySchema);
-
-export { ProductCategory };
-
-
-// --------------------------------- Product Schema ---------------------------------------//
-
-// Interface for the Product attributes
+// Product Interface
 export interface IProduct {
-    name: string;
-    type?: string[];
-    capacity?: string;
-    vendors: string[];
-    factors: { [key: string]: any }[];
-    sub_service_id: mongoose.Schema.Types.ObjectId; // Reference to the Sub Service
-    category_id?: mongoose.Schema.Types.ObjectId; // Reference to ProductCategory
+  name: string;
+  capacity: number;
+  product_sub_service_id: mongoose.Types.ObjectId;
 }
 
-// Interface for the Product Document (instance methods)
+// Product Document Interface
 interface ProductDoc extends mongoose.Document {
-    name: string;
-    type?: string[];
-    capacity?: string;
-    vendors: string[];
-    factors: { [key: string]: any }[];
-    sub_service_id: mongoose.Schema.Types.ObjectId;
-    category_id?: mongoose.Schema.Types.ObjectId; // Reference to ProductCategory
+  name: string;
+  capacity: number;
+  product_sub_service_id: mongoose.Types.ObjectId;
 }
 
 // Product Schema
 const productSchema = new mongoose.Schema<IProduct>(
-    {
-        name: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        type: {
-            type: [String],
-            trim: true,
-        },
-        capacity: {
-            type: String,
-            trim: true,
-        },
-        vendors: {
-            type: [String],
-            trim: true,
-        },
-        factors: {
-            type: [Object],
-            default: []
-        },
-        sub_service_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'SubService',
-            required: true,
-        }
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      minLength: [2, "Product name too short"],
+      maxLength: [50, "Product name too long"],
     },
-    { timestamps: true } // Automatically include createdAt and updatedAt fields
+    capacity: {
+      type: Number,
+      required: true,
+      trim: true,
+      maxLength: [50, "Capacity out of bounds"],
+    },
+    product_sub_service_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ProductSubService",
+      required: true,
+    },
+  },
+  { timestamps: true } // Automatically adds createdAt and updatedAt timestamps
 );
 
-// Add `category_id` field to the Product schema to link it to ProductCategory
-productSchema.add({
-    category_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'ProductCategory',
-        required: false, // Optional if a product can exist without a category
-    },
-});
-
-// Interface for the Product Model (static methods)
+// Static method for creating a new Product document
 interface ProductModelInterface extends mongoose.Model<ProductDoc> {
-    build(attr: IProduct): ProductDoc;
+  build(attr: IProduct): ProductDoc;
 }
 
-// Static `build` method for creating new Product instances
+// Add a static build method to the Product model
 productSchema.statics.build = (attr: IProduct) => {
-    return new Product(attr);
+  return new Product(attr);
 };
 
-// JSON transformation to remove sensitive/unnecessary fields
-productSchema.set('toJSON', {
-    transform: (document, returnedObject) => {
-        returnedObject.id = returnedObject._id.toString();
-        delete returnedObject._id;
-        delete returnedObject.__v;
-    },
+// Configure schema to transform output JSON
+productSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
+    delete returnedObject.createdAt;
+    delete returnedObject.updatedAt;
+  },
 });
 
-// Create the Product model
-const Product = mongoose.model<ProductDoc, ProductModelInterface>('Product', productSchema);
+// Create the SubBuilding model
+const Product = mongoose.model<ProductDoc, ProductModelInterface>(
+  "Product",
+  productSchema
+);
 
 export { Product };

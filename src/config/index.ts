@@ -1,16 +1,20 @@
 // Add dotenv for environment variables
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
 dotenv.config();
 
 const config = {
-    jwt: {
-        secret: process.env.JWT_SECRET || 'SECRET@123',
-        audience: process.env.JWT_AUDIENCE || 'ISSUER',
-        issuer: process.env.JWT_ISSUER || 'AUDIENCE'
-    },
-    port: process.env.PORT || 8080,
-    prefix: process.env.API_PREFIX || 'api',
-    databaseUri: process.env.MONGODB_URI || 'mongodb://admin:designdrafter@10.160.0.6:27017/manas'
+  jwt: {
+    secret: process.env.JWT_SECRET || "SECRET@123",
+    audience: process.env.JWT_AUDIENCE || "ISSUER",
+    issuer: process.env.JWT_ISSUER || "AUDIENCE",
+  },
+  port: process.env.PORT || 8080,
+  prefix: process.env.API_PREFIX || "api",
+  // databaseUri: process.env.MONGODB_URI || 'mongodb://admin:designdrafter@10.160.0.6:27017/manas'
+  // databaseUri: process.env.MONGODB_URI || "mongodb://localhost:27017",
+  databaseUri:
+    process.env.MONGODB_URI ||
+    "mongodb://admin:designdrafter@34.47.138.240:27017/manas",
 };
 
 export default config;

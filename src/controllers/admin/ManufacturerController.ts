@@ -4,29 +4,31 @@ import { ClientError } from "../../exceptions/clientError";
 import { NotFoundError } from "../../exceptions/notFoundError";
 import { processErrors } from "../../utils/errorProcessing";
 import { ResponseCodes } from "../../utils/constants";
-import { IProduct, Product } from "../../models/product";
+import { IManufacturer, Manufacturer } from "../../models/manufacturer";
 
-class ProductController {
+class ManufacturerController {
   static listAll = async (req: Request, res: Response, next: NextFunction) => {
     // Get the Product Sub Service ID from the url
     const { product_sub_service_id } = req.query; // Access query parameter
-    let products = [];
+    let manufacturer = [];
 
     if (product_sub_service_id) {
       // Execute the query with product_sub_service_id
-      products = await Product.find({ product_sub_service_id }).populate(
-        "product_sub_service_id"
-      );
+      manufacturer = await Manufacturer.find({
+        product_sub_service_id,
+      }).populate("product_sub_service_id");
     } else {
       // Execute the query
-      products = await Product.find().populate("product_sub_service_id");
+      manufacturer = await Manufacturer.find().populate(
+        "product_sub_service_id"
+      );
     }
 
     // Send the product object
     res.send({
-      status: ResponseCodes.PRODUCT_LIST.code,
-      message: ResponseCodes.PRODUCT_LIST.message,
-      data: products,
+      status: ResponseCodes.MANUFACTURER_LIST.code,
+      message: ResponseCodes.MANUFACTURER_LIST.message,
+      data: manufacturer,
     });
   };
 
@@ -39,34 +41,34 @@ class ProductController {
     const id: string = req.params.id;
 
     // Mongoose automatically casts the id to ObjectID
-    const product = await Product.findById(id);
-    if (!product) throw new NotFoundError(`Product with ID ${id} not found`);
+    const manufacturer = await Manufacturer.findById(id);
+    if (!manufacturer)
+      throw new NotFoundError(`Manufacturer with ID ${id} not found`);
 
     res.send({
-      status: ResponseCodes.PRODUCT_DETAILS.code,
-      message: ResponseCodes.PRODUCT_DETAILS.message,
-      data: product?.toJSON(),
+      status: ResponseCodes.MANUFACTURER_DETAILS.code,
+      message: ResponseCodes.MANUFACTURER_DETAILS.message,
+      data: manufacturer?.toJSON(),
     });
   };
 
-  static newProduct = async (
+  static newManufacturer = async (
     req: Request,
     res: Response,
     next: NextFunction
   ) => {
     // Get parameters from the body
-    const { product_sub_service_id, name, capacity } = req.body;
-    let product;
+    const { product_sub_service_id, name } = req.body;
+    let manufacturer;
 
     try {
-      product = Product.build({
+      manufacturer = Manufacturer.build({
         product_sub_service_id,
         name,
-        capacity,
-      } as IProduct);
+      } as IManufacturer);
 
       // Save the product
-      await product.save();
+      await manufacturer.save();
     } catch (e: any) {
       console.error(e);
       const error = e as Error.ValidationError;
@@ -75,13 +77,13 @@ class ProductController {
 
     // If all ok, send response
     res.send({
-      status: ResponseCodes.PRODUCT_CREATED.code,
-      message: ResponseCodes.PRODUCT_CREATED.message,
-      data: product.toJSON(),
+      status: ResponseCodes.MANUFACTURER_CREATED.code,
+      message: ResponseCodes.MANUFACTURER_CREATED.message,
+      data: manufacturer.toJSON(),
     });
   };
 
-  static editProduct = async (
+  static editManufacturer = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -90,33 +92,33 @@ class ProductController {
     const id = req.params.id;
 
     // Get values from the body
-    const { product_sub_service_id, name, capacity } = req.body;
+    const { product_sub_service_id, name } = req.body;
 
     // Mongoose automatically casts the id to ObjectID
-    const product = await Product.findById(id);
-    if (!product) throw new NotFoundError(`Product with ID ${id} not found`);
+    const manufacturer = await Manufacturer.findById(id);
+    if (!manufacturer)
+      throw new NotFoundError(`Manufacturer with ID ${id} not found`);
 
     // Edit the properties
-    product.product_sub_service_id = product_sub_service_id;
-    product.name = name;
-    product.capacity = capacity;
+    manufacturer.product_sub_service_id = product_sub_service_id;
+    manufacturer.name = name;
 
     // Save and catch all validation errors
     try {
-      await product.save();
+      await manufacturer.save();
     } catch (e) {
       const error = e as Error.ValidationError;
       throw new ClientError(processErrors(error));
     }
 
     res.send({
-      status: ResponseCodes.PRODUCT_UPDATED.code,
-      message: ResponseCodes.PRODUCT_UPDATED.message,
-      data: product.toJSON(),
+      status: ResponseCodes.MANUFACTURER_UPDATED.code,
+      message: ResponseCodes.MANUFACTURER_UPDATED.message,
+      data: manufacturer.toJSON(),
     });
   };
 
-  static deleteProduct = async (
+  static deleteManufacturer = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -125,17 +127,18 @@ class ProductController {
     const id = req.params.id;
 
     // Mongoose automatically casts the id to ObjectID
-    const product = await Product.findById(id);
-    if (!product) throw new NotFoundError(`Product with ID ${id} not found`);
+    const manufacturer = await Manufacturer.findById(id);
+    if (!manufacturer)
+      throw new NotFoundError(`Manufacturer with ID ${id} not found`);
 
-    await product.delete();
+    await manufacturer.delete();
 
     // After all send response
     res.send({
-      status: ResponseCodes.PRODUCT_DELETED.code,
-      message: ResponseCodes.PRODUCT_DELETED.message,
+      status: ResponseCodes.MANUFACTURER_DELETED.code,
+      message: ResponseCodes.MANUFACTURER_DELETED.message,
     });
   };
 }
 
-export default ProductController;
+export default ManufacturerController;

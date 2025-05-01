@@ -1,47 +1,47 @@
 import { Router } from "express";
-import ProductController from "../../controllers/admin/ProductController";
 import { ROLES } from "../../utils/constants";
 
 // Middleware
 import { asyncHandler } from "../../middleware/asyncHandler";
 import { checkJwt } from "../../middleware/checkJwt";
 import { checkRole } from "../../middleware/checkRole";
+import ProductSubServiceController from "../../controllers/admin/ProductSubServiceController";
 
 const router = Router();
 
-// Get all products
+// Get all services
 router.get(
   "/",
   [checkJwt, checkRole([ROLES.USER, ROLES.ADMIN])],
-  asyncHandler(ProductController.listAll)
+  asyncHandler(ProductSubServiceController.listAll)
 );
 
-// Get one product
+// Get one service
 router.get(
   "/:id([0-9a-z]{24})",
   [checkJwt, checkRole([ROLES.USER, ROLES.ADMIN])],
-  asyncHandler(ProductController.getOneById)
+  asyncHandler(ProductSubServiceController.getOneById)
 );
 
-// Create a new product
+// Create a new service
 router.post(
   "/",
   [checkJwt, checkRole([ROLES.USER, ROLES.ADMIN])],
-  asyncHandler(ProductController.newProduct)
+  asyncHandler(ProductSubServiceController.newProductSubService)
 );
 
-// Edit one product
+// Edit one service
 router.patch(
   "/:id([0-9a-z]{24})",
   [checkJwt, checkRole([ROLES.USER, ROLES.ADMIN])],
-  asyncHandler(ProductController.editProduct)
+  asyncHandler(ProductSubServiceController.editProductSubService)
 );
 
-// Delete one product
+// Delete one service
 router.delete(
   "/:id([0-9a-z]{24})",
   [checkJwt, checkRole([ROLES.ADMIN])],
-  asyncHandler(ProductController.deleteProduct)
+  asyncHandler(ProductSubServiceController.deleteProductSubService)
 );
 
 export default router;
