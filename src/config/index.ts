@@ -15,6 +15,9 @@ const config = {
   databaseUri:
     process.env.MONGODB_URI ||
     "mongodb://admin:designdrafter@10.160.0.6:27017/manas",
+    GCP_PROJECT_ID:'prod-infra',
+    GCP_BUCKET_NAME:'alpha-p7e-client',
+    GOOGLE_APPLICATION_CREDENTIALS:'../../cloud/prod-infra-442609-4205d9e6e6f6.json'
 };
 
 export default config;
