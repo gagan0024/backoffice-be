@@ -16,6 +16,7 @@ import finalDesign from "./admin/final-design";
 
 import calculation from "./public/calculation";
 import { NotFoundError } from "../exceptions/notFoundError";
+import cloud from './admin/cloud';
 
 const routes = Router();
 
@@ -35,6 +36,7 @@ routes.use("/admin/actions", action);
 routes.use("/admin/products", product);
 routes.use("/admin/final-designs", finalDesign);
 routes.use("/admin/manufacturer", manufacturer);
+routes.use('/admin/storage', cloud);
 
 // Public routes
 routes.use("/data", calculation);
