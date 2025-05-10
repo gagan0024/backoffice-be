@@ -16,5 +16,6 @@ COPY . .
 # Expose the port the app will run on
 EXPOSE 8080
 
+COPY src/cloud/. /app/dist/cloud
 # Command to run the app
 CMD ["node", "dist/index.js"]
